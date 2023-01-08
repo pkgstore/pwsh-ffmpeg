@@ -53,6 +53,11 @@ function Compress-FFmpeg() {
   # FFmpeg executable file.
   ${APP} = "${PSScriptRoot}\App\ffmpeg.exe"
 
+  # Checking if a 'ffmpeg.exe' exist.
+  if ( -not ( Test-Path -Path "${APP}" -PathType "Leaf" ) ) {
+    Write-Msg -T 'E' -M "'ffmpeg.exe' not found!" -A 'Stop'
+  }
+
   ForEach ( ${F} in ( Get-ChildItem ${Files} ) ) {
     # Composing a app command.
     ${CMD} = @( "-i", "$( ${F}.FullName )" )
