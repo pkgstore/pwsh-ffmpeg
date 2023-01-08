@@ -4,9 +4,17 @@ function Compress-FFmpeg() {
 
     .DESCRIPTION
 
-    .PARAMETER Path
+    .PARAMETER Files
 
-    .PARAMETER Time
+    .PARAMETER vCodec
+
+    .PARAMETER CRF
+
+    .PARAMETER Preset
+
+    .PARAMETER aCodec
+
+    .PARAMETER Extension
 
     .EXAMPLE
 
@@ -24,19 +32,32 @@ function Compress-FFmpeg() {
     [Alias('F')]
     [string[]]${Files},
 
-    [Alias('VC')]
+    [Alias('CV')]
     [string]${vCodec} = 'libx265',
 
-    [int]${CRF} = 28
+    [Alias('C')]
+    [int]${CRF} = 28,
+
+    [ValidateSet('ultrafast', 'superfast', 'veryfast', 'faster', 'fast', 'medium', 'slow', 'slower', 'veryslow', 'placebo')]
+    [Alias('PS')]
+    [string]${Preset} = 'medium',
+
+    [ValidateSet('copy', 'aac')]
+    [Alias('CA')]
+    [string]${aCodec} = 'copy',
+
+    [Alias('EXT')]
+    [string]${Extension} = 'mp4'
   )
 
-  # RAR executable file.
+  # FFmpeg executable file.
   ${APP} = "${PSScriptRoot}\App\ffmpeg.exe"
 
   ForEach ( ${F} in ( Get-ChildItem ${Files} ) ) {
     # Composing a app command.
-    ${CMD} = @( "-i '$( ${F}.FullName )'" )
-    ${CMD} += @( "-vcodec ${vCodec}", "-crf ${CRF}" )
+    ${CMD} = @( "-i", "$( ${F}.FullName )" )
+    ${CMD} += @( "-c:v", "${vCodec}", "-crf", "${CRF}", "-preset", "${Preset}" )
+    ${CMD} += @( "-c:a", "${aCodec}" )
     ${CMD} += @( "$( ${F}.FullName + '.' + ${Extension} )" )
 
     # Running a app.
