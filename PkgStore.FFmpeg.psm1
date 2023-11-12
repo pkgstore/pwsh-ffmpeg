@@ -22,7 +22,7 @@ function Compress-Video() {
   #>
 
   Param(
-    [Parameter(Mandatory)][Alias('F')][string[]]$P_Files,
+    [Parameter(Mandatory)][SupportsWildcards()][Alias('F')][string[]]$P_Files,
     [Alias('CV')][string]$P_vCodec = 'libx265',
     [Alias('CA')][string]$P_aCodec = 'copy',
     [Alias('R')][int]$P_Framerate,
@@ -42,7 +42,7 @@ function Compress-Video() {
     if ($P_Preset) { $Param += @('-preset', "${P_Preset}") }
     if ($P_Framerate) { $Param += @('-r', "${P_Framerate}") }
     $Param += @('-c:a', "${P_aCodec}")
-    $Param += @("$($(Join-Path $_.DirectoryName $_.BaseName).$P_Extension)")
+    $Param += @("$($(Join-Path $_.DirectoryName $_.BaseName)).$P_Extension")
 
     # Running a app.
     & "${AppExe}" $Param
