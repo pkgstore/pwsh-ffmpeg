@@ -5,8 +5,8 @@
   .AUTHOREMAIL  mail@kitsune.solar
   .COMPANYNAME  iHub.TO
   .COPYRIGHT    2023 Kitsune Solar. All rights reserved.
-  .LICENSEURI   https://github.com/pkgstore/pwsh-curl/blob/main/LICENSE
-  .PROJECTURI
+  .LICENSEURI   https://github.com/pkgstore/pwsh-ffmpeg/blob/main/LICENSE
+  .PROJECTURI   https://github.com/pkgstore/pwsh-ffmpeg
 #>
 
 $App = @('ffmpeg.exe')
@@ -22,7 +22,7 @@ function Compress-Video() {
   #>
 
   Param(
-    [Parameter(Mandatory)][SupportsWildcards()][Alias('F')][string[]]$P_Files,
+    [Parameter(Mandatory)][Alias('I')][string[]]$P_In,
     [Alias('CV')][string]$P_vCodec = 'libx265',
     [Alias('CA')][string]$P_aCodec = 'copy',
     [Alias('R')][int]$P_Framerate,
@@ -33,7 +33,7 @@ function Compress-Video() {
 
   Test-App
 
-  (Get-ChildItem $P_Files -File)| ForEach-Object {
+  (Get-ChildItem $P_In -File) | ForEach-Object {
     # Composing a app command.
     $Param = @('-hide_banner')
     $Param += @('-i', "${_}")
