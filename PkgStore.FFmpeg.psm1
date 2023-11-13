@@ -31,25 +31,27 @@ function Compress-Video() {
     [Alias('EXT')][string]$P_Extension = 'mp4'
   )
 
-  Test-App
+  # Checking FFmpeg location.
+  Test-FFmpeg
 
-  (Get-ChildItem $P_In -File) | ForEach-Object {
-    # Composing a app command.
-    $Param = @('-hide_banner')
-    $Param += @('-i', "${_}")
-    $Param += @('-c:v', "${P_vCodec}")
-    if ($P_CRF) { $Param += @('-crf', "${P_CRF}") }
-    if ($P_Preset) { $Param += @('-preset', "${P_Preset}") }
-    if ($P_Framerate) { $Param += @('-r', "${P_Framerate}") }
-    $Param += @('-c:a', "${P_aCodec}")
-    $Param += @("$($(Join-Path $_.DirectoryName $_.BaseName)).$P_Extension")
+  (Get-Item $P_In) | ForEach-Object {
+    $I = "$($_.FullName)"                                         # Input data.
+    $O = "$($_.FullName.TrimEnd($_.Extension)).${P_Extension}"    # Output data.
 
-    # Running a app.
+    $Param = @('-hide_banner')                                    # Hide FFmpeg banner.
+    $Param += @('-i', "${I}")                                   # Input data.
+    $Param += @('-c:v', "${P_vCodec}")                          # Video codec.
+    if ($P_CRF) { $Param += @('-crf', "${P_CRF}") }               # Constant Rate Factor.
+    if ($P_Preset) { $Param += @('-preset', "${P_Preset}") }    # Video preset.
+    if ($P_Framerate) { $Param += @('-r', "${P_Framerate}") }     # Video frame rate.
+    $Param += @('-c:a', "${P_aCodec}")                          # Audio codec.
+    $Param += @("${O}")                                         # Output data.
+
     & "${AppExe}" $Param
   }
 }
 
-function Test-App {
+function Test-FFmpeg {
   <#
     .SYNOPSIS
 
