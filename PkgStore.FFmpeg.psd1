@@ -8,7 +8,6 @@
   Description = ''
   PowerShellVersion = '7.1'
   RequiredModules = @('PkgStore.Kernel')
-  FunctionsToExport = @('Compress-Video')
   PrivateData = @{
     PSData = @{
       Tags = @('pwsh', 'ffmpeg')
