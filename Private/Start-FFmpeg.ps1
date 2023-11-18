@@ -9,7 +9,7 @@ function Start-FFmpeg {
     [Alias('AD')][string[]]$AppData = @('ffmpeg.exe')
   )
 
-  $AppPath = (Split-Path -Path "${PSScriptRoot}" -Parent)
+  $AppPath = (Split-Path "${PSScriptRoot}" -Parent)
   $App = @{LiteralPath = "${AppPath}"; Filter = "$($AppData[0])"; Recurse = $true; File = $true}
   $App = ((Get-ChildItem @App) | Select-Object -First 1)
   $NL = [Environment]::NewLine
