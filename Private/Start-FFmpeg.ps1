@@ -5,7 +5,7 @@ function Start-FFmpeg {
     .DESCRIPTION
   #>
 
-  Param(
+  param(
     [Alias('AD')][string[]]$AppData = @('ffmpeg.exe')
   )
 

@@ -5,7 +5,7 @@ function Compress-Video() {
     .DESCRIPTION
   #>
 
-  Param(
+  param(
     [Parameter(Mandatory)][Alias('I')][string[]]$In,
     [Alias('CV')][string]$vCodec = 'libx265',
     [Alias('CA')][string]$aCodec = 'copy',
