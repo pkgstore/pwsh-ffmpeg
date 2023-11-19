@@ -1,8 +1,10 @@
 function Start-FFmpeg {
   <#
     .SYNOPSIS
+    Running FFmpeg.
 
     .DESCRIPTION
+    Checking the location of the program files and launching the program.
   #>
 
   param(
