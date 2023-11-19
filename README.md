@@ -5,7 +5,7 @@ A script for quickly batch converting video files from one format to another, ma
 ## Install
 
 ```powershell
-Install-CustomModule -Name 'FFmpeg' -GitHubPath 'pkgstore/pwsh-ffmpeg'
+Install-CustomModule -N 'FFmpeg' -GHP 'pkgstore/pwsh-ffmpeg'
 ```
 
 ## Syntax
